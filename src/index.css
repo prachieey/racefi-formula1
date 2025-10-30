@@ -1,0 +1,542 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply antialiased;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+  }
+
+  ::selection {
+    @apply bg-red-600 text-white;
+  }
+}
+
+@layer utilities {
+  .animate-fadeIn {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  .animate-slideInLeft {
+    animation: slideInLeft 0.6s ease-out;
+  }
+
+  .animate-slideInRight {
+    animation: slideInRight 0.6s ease-out;
+  }
+
+  .hover\:scale-102:hover {
+    transform: scale(1.02);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-black;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-red-600 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-red-700;
+}
+
+/* Focus styles */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  @apply outline-none ring-2 ring-red-600 ring-offset-2 ring-offset-black;
+}
+
+/* Gradient text animation */
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease infinite;
+}
+
+/* Racing lines effect */
+.racing-lines {
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 10px,
+    rgba(220, 38, 38, 0.1) 10px,
+    rgba(220, 38, 38, 0.1) 20px
+  );
+}
+
+/* Glow effect */
+.glow-red {
+  box-shadow: 0 0 20px rgba(220, 38, 38, 0.5);
+}
+
+.glow-red-strong {
+  box-shadow: 0 0 40px rgba(220, 38, 38, 0.8);
+}
+
+/* Code block styling */
+pre {
+  @apply overflow-x-auto;
+}
+
+code {
+  @apply font-mono text-sm;
+}
+
+/* Smooth transitions for all interactive elements */
+button, a, .transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+/* ===== MOTORSPORT COLOR PALETTE SYSTEM ===== */
+
+/* Primary Foundation Colors */
+.bg-motorsport-jet {
+  background-color: #0f0f0f;
+}
+
+.bg-motorsport-charcoal {
+  background-color: #2a2a2a;
+}
+
+.bg-motorsport-charcoal-light {
+  background-color: #3d3d3d;
+}
+
+.bg-motorsport-white {
+  background-color: #ffffff;
+}
+
+.text-motorsport-white {
+  color: #ffffff;
+}
+
+.text-motorsport-charcoal {
+  color: #2a2a2a;
+}
+
+/* Accent Colors - Speed & Energy */
+.bg-motorsport-red {
+  background-color: #dc2626;
+}
+
+.bg-motorsport-red-bright {
+  background-color: #ef4444;
+}
+
+.bg-motorsport-yellow {
+  background-color: #fbbf24;
+}
+
+.bg-motorsport-yellow-bright {
+  background-color: #fcd34d;
+}
+
+.bg-motorsport-orange {
+  background-color: #ea580c;
+}
+
+.bg-motorsport-orange-bright {
+  background-color: #f97316;
+}
+
+.text-motorsport-red {
+  color: #dc2626;
+}
+
+.text-motorsport-red-bright {
+  color: #ef4444;
+}
+
+.text-motorsport-yellow {
+  color: #fbbf24;
+}
+
+.text-motorsport-orange {
+  color: #ea580c;
+}
+
+/* Silver Highlights - Premium Details */
+.bg-motorsport-silver {
+  background-color: #e5e7eb;
+}
+
+.text-motorsport-silver {
+  color: #e5e7eb;
+}
+
+.border-motorsport-red {
+  border-color: #dc2626;
+}
+
+.border-motorsport-yellow {
+  border-color: #fbbf24;
+}
+
+/* ===== MOTORSPORT EFFECTS ===== */
+
+/* Glow Effects - Enhanced */
+.glow-motorsport-red {
+  box-shadow: 0 0 20px rgba(220, 38, 38, 0.5), inset 0 0 10px rgba(220, 38, 38, 0.2);
+}
+
+.glow-motorsport-red-strong {
+  box-shadow: 0 0 40px rgba(220, 38, 38, 0.8), 0 0 60px rgba(220, 38, 38, 0.5);
+}
+
+.glow-motorsport-yellow {
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.5), inset 0 0 10px rgba(251, 191, 36, 0.2);
+}
+
+.glow-motorsport-orange {
+  box-shadow: 0 0 20px rgba(234, 88, 12, 0.5), inset 0 0 10px rgba(234, 88, 12, 0.2);
+}
+
+.glow-motorsport-multi {
+  box-shadow: 0 0 30px rgba(220, 38, 38, 0.4), 0 0 20px rgba(251, 191, 36, 0.3);
+}
+
+/* Neon Stroke Effect */
+.stroke-motorsport-red {
+  text-shadow: 0 0 10px rgba(220, 38, 38, 0.8);
+}
+
+.stroke-motorsport-yellow {
+  text-shadow: 0 0 10px rgba(251, 191, 36, 0.8);
+}
+
+/* Speed Lines - Horizontal Motion */
+.speed-lines-horizontal {
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 15px,
+    rgba(220, 38, 38, 0.08) 15px,
+    rgba(220, 38, 38, 0.08) 30px
+  );
+  position: relative;
+}
+
+/* Speed Lines - Vertical Motion */
+.speed-lines-vertical {
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 15px,
+    rgba(251, 191, 36, 0.08) 15px,
+    rgba(251, 191, 36, 0.08) 30px
+  );
+  position: relative;
+}
+
+/* Matte Charcoal with Glossy Accents */
+.matte-charcoal {
+  background-color: #2a2a2a;
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(0, 0, 0, 0.3) 0%, transparent 50%);
+}
+
+.glossy-accent {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  position: relative;
+}
+
+/* Track Texture - Asphalt Effect */
+.asphalt-texture {
+  background-color: #1a1a1a;
+  background-image: 
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.03) 4px),
+    repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.03) 4px);
+}
+
+/* Burnout Effect - Tire Smoke */
+.burnout-smoke {
+  background: radial-gradient(ellipse at center, rgba(220, 38, 38, 0.3) 0%, rgba(220, 38, 38, 0.1) 40%, transparent 70%);
+}
+
+/* Pit Lane Stripes - Diagonal */
+.pit-lane-stripes {
+  background-image: repeating-linear-gradient(
+    45deg,
+    #2a2a2a,
+    #2a2a2a 10px,
+    #fbbf24 10px,
+    #fbbf24 20px
+  );
+}
+
+/* Pit Lane Stripes - Horizontal */
+.pit-lane-stripes-h {
+  background-image: repeating-linear-gradient(
+    0deg,
+    #2a2a2a,
+    #2a2a2a 10px,
+    #dc2626 10px,
+    #dc2626 20px
+  );
+}
+
+/* Checkered Flag Pattern */
+.checkered-flag {
+  background-image: 
+    linear-gradient(45deg, #2a2a2a 25%, transparent 25%),
+    linear-gradient(-45deg, #2a2a2a 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #2a2a2a 75%),
+    linear-gradient(-45deg, transparent 75%, #2a2a2a 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  background-color: #ffffff;
+}
+
+/* Gradient Overlays */
+.gradient-race-red-to-orange {
+  background: linear-gradient(135deg, #dc2626 0%, #ea580c 100%);
+}
+
+.gradient-race-yellow-to-orange {
+  background: linear-gradient(135deg, #fbbf24 0%, #ea580c 100%);
+}
+
+.gradient-race-dark {
+  background: linear-gradient(135deg, #0f0f0f 0%, #2a2a2a 100%);
+}
+
+.gradient-race-charcoal-to-black {
+  background: linear-gradient(180deg, #2a2a2a 0%, #0f0f0f 100%);
+}
+
+/* Metallic Silver Shine */
+.metallic-silver {
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 50%, #d1d5db 100%);
+}
+
+/* ===== MOTORSPORT ANIMATIONS ===== */
+
+/* Pulse Race - Heartbeat Effect */
+.animate-pulse-race {
+  animation: pulseRace 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulseRace {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Drift - Lateral Movement */
+.animate-drift {
+  animation: drift 3s ease-in-out infinite;
+}
+
+@keyframes drift {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(4px);
+  }
+}
+
+/* Engine Rev - Scale Pulse */
+.animate-engine-rev {
+  animation: engineRev 0.5s ease-in-out;
+}
+
+@keyframes engineRev {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Tire Screech - Rotation */
+.animate-tire-screech {
+  animation: tireScreech 0.3s ease-in-out;
+}
+
+@keyframes tireScreech {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-2deg);
+  }
+  75% {
+    transform: rotate(2deg);
+  }
+}
+
+/* Acceleration - Skew Effect */
+.animate-acceleration {
+  animation: acceleration 0.6s ease-out;
+}
+
+@keyframes acceleration {
+  0% {
+    transform: skewX(0deg) scaleX(1);
+  }
+  50% {
+    transform: skewX(-3deg) scaleX(1.02);
+  }
+  100% {
+    transform: skewX(0deg) scaleX(1);
+  }
+}
+
+/* Pit Stop Flash - Brightness Pulse */
+.animate-pit-stop-flash {
+  animation: pitStopFlash 0.4s ease-in-out;
+}
+
+@keyframes pitStopFlash {
+  0%, 100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.3);
+  }
+}
+
+/* Checkered Flag Wave */
+.animate-checkered-wave {
+  animation: checkeredWave 2s ease-in-out infinite;
+}
+
+@keyframes checkeredWave {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(2deg);
+  }
+}
+
+/* ===== MOTORSPORT UTILITIES ===== */
+
+/* Hover Effects */
+.hover-race-glow:hover {
+  box-shadow: 0 0 30px rgba(220, 38, 38, 0.6);
+}
+
+.hover-race-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.hover-race-scale:hover {
+  transform: scale(1.05);
+}
+
+.hover-race-spin:hover {
+  animation: raceSpin 0.6s ease-out;
+}
+
+@keyframes raceSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Focus States */
+.focus-race-ring:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.5);
+}
+
+/* Active States */
+.active-race {
+  background-color: #dc2626;
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(220, 38, 38, 0.5);
+}
+
+/* Disabled States */
+.disabled-race {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ===== RESPONSIVE MOTORSPORT UTILITIES ===== */
+
+@media (max-width: 768px) {
+  .speed-lines-horizontal,
+  .speed-lines-vertical {
+    background-size: 50%;
+  }
+  
+  .pit-lane-stripes,
+  .pit-lane-stripes-h {
+    background-size: 15px;
+  }
+}

@@ -1,0 +1,218 @@
+{
+  "motorsport": {
+    "primary": {
+      "jet": "#0f0f0f",
+      "charcoal": "#2a2a2a",
+      "charcoal_light": "#3d3d3d",
+      "charcoal_dark": "#1a1a1a",
+      "white": "#ffffff",
+      "white_off": "#f5f5f5"
+    },
+    "accents": {
+      "red": "#dc2626",
+      "red_bright": "#ef4444",
+      "red_dark": "#991b1b",
+      "yellow": "#fbbf24",
+      "yellow_bright": "#fcd34d",
+      "yellow_dark": "#d97706",
+      "orange": "#ea580c",
+      "orange_bright": "#f97316",
+      "orange_dark": "#c2410c"
+    },
+    "highlights": {
+      "silver": "#e5e7eb",
+      "silver_light": "#f3f4f6",
+      "silver_dark": "#d1d5db"
+    }
+  },
+  "css_classes": {
+    "backgrounds": [
+      "bg-motorsport-jet",
+      "bg-motorsport-charcoal",
+      "bg-motorsport-charcoal-light",
+      "bg-motorsport-white",
+      "bg-motorsport-red",
+      "bg-motorsport-red-bright",
+      "bg-motorsport-yellow",
+      "bg-motorsport-yellow-bright",
+      "bg-motorsport-orange",
+      "bg-motorsport-orange-bright",
+      "bg-motorsport-silver"
+    ],
+    "text": [
+      "text-motorsport-white",
+      "text-motorsport-charcoal",
+      "text-motorsport-red",
+      "text-motorsport-red-bright",
+      "text-motorsport-yellow",
+      "text-motorsport-orange",
+      "text-motorsport-silver"
+    ],
+    "borders": [
+      "border-motorsport-red",
+      "border-motorsport-yellow"
+    ],
+    "effects": {
+      "glow": [
+        "glow-motorsport-red",
+        "glow-motorsport-red-strong",
+        "glow-motorsport-yellow",
+        "glow-motorsport-orange",
+        "glow-motorsport-multi"
+      ],
+      "text_effects": [
+        "stroke-motorsport-red",
+        "stroke-motorsport-yellow"
+      ],
+      "speed_lines": [
+        "speed-lines-horizontal",
+        "speed-lines-vertical"
+      ],
+      "textures": [
+        "matte-charcoal",
+        "glossy-accent",
+        "asphalt-texture",
+        "burnout-smoke"
+      ],
+      "patterns": [
+        "pit-lane-stripes",
+        "pit-lane-stripes-h",
+        "checkered-flag"
+      ],
+      "gradients": [
+        "gradient-race-red-to-orange",
+        "gradient-race-yellow-to-orange",
+        "gradient-race-dark",
+        "gradient-race-charcoal-to-black",
+        "metallic-silver"
+      ]
+    },
+    "animations": [
+      "animate-pulse-race",
+      "animate-drift",
+      "animate-engine-rev",
+      "animate-tire-screech",
+      "animate-acceleration",
+      "animate-pit-stop-flash",
+      "animate-checkered-wave"
+    ],
+    "interactive": {
+      "hover": [
+        "hover-race-glow",
+        "hover-race-lift",
+        "hover-race-scale",
+        "hover-race-spin"
+      ],
+      "states": [
+        "focus-race-ring",
+        "active-race",
+        "disabled-race"
+      ]
+    }
+  },
+  "color_combinations": {
+    "high_contrast": [
+      {
+        "name": "Classic Black & White",
+        "colors": ["#0f0f0f", "#ffffff"]
+      },
+      {
+        "name": "Charcoal & Yellow",
+        "colors": ["#2a2a2a", "#fbbf24"]
+      },
+      {
+        "name": "Charcoal & Red",
+        "colors": ["#2a2a2a", "#dc2626"]
+      }
+    ],
+    "energy": [
+      {
+        "name": "Speed & Heat",
+        "colors": ["#dc2626", "#fbbf24"]
+      },
+      {
+        "name": "Intensity",
+        "colors": ["#dc2626", "#ea580c"]
+      },
+      {
+        "name": "Warmth",
+        "colors": ["#fbbf24", "#ea580c"]
+      }
+    ],
+    "premium": [
+      {
+        "name": "Luxury",
+        "colors": ["#2a2a2a", "#e5e7eb"]
+      },
+      {
+        "name": "Elegance",
+        "colors": ["#0f0f0f", "#e5e7eb"]
+      },
+      {
+        "name": "Performance",
+        "colors": ["#2a2a2a", "#dc2626", "#e5e7eb"]
+      }
+    ]
+  },
+  "animations": {
+    "pulse_race": {
+      "duration": "2s",
+      "timing": "cubic-bezier(0.4, 0, 0.6, 1)",
+      "effect": "Heartbeat pulse",
+      "use_case": "Status indicators, live badges"
+    },
+    "drift": {
+      "duration": "3s",
+      "timing": "ease-in-out",
+      "effect": "Lateral movement",
+      "use_case": "Background elements, continuous loop"
+    },
+    "engine_rev": {
+      "duration": "0.5s",
+      "timing": "ease-in-out",
+      "effect": "Scale pulse",
+      "use_case": "Button emphasis, interactions"
+    },
+    "tire_screech": {
+      "duration": "0.3s",
+      "timing": "ease-in-out",
+      "effect": "Rotation",
+      "use_case": "Error states, quick reactions"
+    },
+    "acceleration": {
+      "duration": "0.6s",
+      "timing": "ease-out",
+      "effect": "Skew effect",
+      "use_case": "Loading states, transitions"
+    },
+    "pit_stop_flash": {
+      "duration": "0.4s",
+      "timing": "ease-in-out",
+      "effect": "Brightness pulse",
+      "use_case": "Success notifications, confirmations"
+    },
+    "checkered_wave": {
+      "duration": "2s",
+      "timing": "ease-in-out",
+      "effect": "Wave motion",
+      "use_case": "Victory, completion, finish line"
+    }
+  },
+  "component_templates": {
+    "primary_button": "bg-motorsport-red hover-race-glow text-motorsport-white px-6 py-3 rounded font-bold",
+    "secondary_button": "bg-motorsport-charcoal border-2 border-motorsport-yellow text-motorsport-yellow hover-race-lift px-6 py-3 rounded font-bold",
+    "tertiary_button": "bg-motorsport-orange hover-race-scale text-motorsport-white px-6 py-3 rounded font-bold",
+    "card": "bg-motorsport-charcoal matte-charcoal border-l-4 border-motorsport-red p-6 rounded hover-race-lift",
+    "badge": "bg-motorsport-red text-motorsport-white px-3 py-1 rounded glow-motorsport-red font-bold",
+    "hero": "bg-motorsport-jet text-motorsport-white min-h-screen flex items-center justify-center",
+    "gradient_text": "gradient-race-red-to-orange bg-clip-text text-transparent"
+  },
+  "metadata": {
+    "theme": "Motorsport Racing",
+    "inspiration": ["Ferrari", "McLaren", "Formula 1"],
+    "philosophy": "Bold foundation, speed indicators, minimal complexity, premium feel, visual motion",
+    "performance": "CSS-only, GPU-accelerated, mobile-optimized, accessible",
+    "created": "2024",
+    "status": "Production Ready"
+  }
+}

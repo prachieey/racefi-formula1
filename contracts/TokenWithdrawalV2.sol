@@ -10,10 +10,9 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 /// @title TokenWithdrawal (improved/fixed)
 /// @notice Multi-sig withdrawer contract with timelock, daily limits, pause, and safe token handling.
 /// @dev Changes vs original:
-///   - avoids public getter on struct with nested mapping (confirmations stored externally)
-///   - uses SafeERC20 for robust token transfers
-///   - fixes event indexed fields (<=3) and emits
-///   - uses nonce for unique requestId
+///   - ensures enough withdrawers exist for required confirmations
+///   - avoids duplicate grant of roles
+///   - small helpers to read ids/count
 contract TokenWithdrawal is AccessControl, ReentrancyGuard, Pausable {
     using SafeERC20 for IERC20;
 
@@ -25,8 +24,7 @@ contract TokenWithdrawal is AccessControl, ReentrancyGuard, Pausable {
     uint256 public constant MIN_CONFIRMATIONS = 2;
     uint256 public constant WITHDRAWAL_DELAY = 2 days;
 
-    // Daily limit (NOTE: single limit applies to amounts as raw uint256.
-    // If you want different limits per token, extend mapping token -> limit)
+    // Daily limit (applies to raw uint256 amounts across tokens/native)
     uint256 public dailyWithdrawalLimit;
     uint256 public lastWithdrawalDay;
     uint256 public totalWithdrawnToday;
@@ -122,12 +120,20 @@ contract TokenWithdrawal is AccessControl, ReentrancyGuard, Pausable {
 
     constructor(address _initialAdmin, address[] memory _withdrawers, uint256 _dailyLimit) {
         require(_initialAdmin != address(0), "Invalid admin");
+        require(_withdrawers.length >= MIN_CONFIRMATIONS, "Not enough withdrawers");
+
+        // grant admin roles
         _grantRole(DEFAULT_ADMIN_ROLE, _initialAdmin);
         _grantRole(PAUSER_ROLE, _initialAdmin);
 
+        // grant withdrawer role, avoid duplicates
+        // small local map to track duplicates (in-memory only)
         for (uint256 i = 0; i < _withdrawers.length; i++) {
-            require(_withdrawers[i] != address(0), "Invalid withdrawer");
-            _grantRole(WITHDRAWER_ROLE, _withdrawers[i]);
+            address w = _withdrawers[i];
+            require(w != address(0), "Invalid withdrawer");
+            if (!hasRole(WITHDRAWER_ROLE, w)) {
+                _grantRole(WITHDRAWER_ROLE, w);
+            }
         }
 
         dailyWithdrawalLimit = _dailyLimit;
@@ -340,12 +346,22 @@ contract TokenWithdrawal is AccessControl, ReentrancyGuard, Pausable {
         return (r.id, r.tokenAddress, r.to, r.amount, r.timestamp, r.executed, r.isNative, r.requester, r.confirmationCount);
     }
 
-    /// @notice Check whether `who` has confirmed a given request
+    /// @notice Check whether who has confirmed a given request
     function hasConfirmed(bytes32 requestId, address who) external view returns (bool) {
         return confirmations[requestId][who];
+    }
+
+    /// @notice Number of requests created
+    function getRequestCount() external view returns (uint256) {
+        return withdrawalRequestIds.length;
+    }
+
+    /// @notice Get request id at index (useful for off-chain indexing)
+    function getRequestIdAt(uint256 index) external view returns (bytes32) {
+        require(index < withdrawalRequestIds.length, "Index OOB");
+        return withdrawalRequestIds[index];
     }
 
     /// Allow contract to receive ETH
     receive() external payable {}
 }
-

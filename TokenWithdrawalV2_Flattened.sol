@@ -1,19 +1,233 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "@openzeppelin/contracts/security/Pausable.sol";
+// File: @openzeppelin/contracts/token/ERC20/IERC20.sol
+// OpenZeppelin Contracts (last updated v4.9.0) (token/ERC20/IERC20.sol)
+
+interface IERC20 {
+    event Transfer(address indexed from, address indexed to, uint256 value);
+    event Approval(address indexed owner, address indexed spender, uint256 value);
+    function totalSupply() external view returns (uint256);
+    function balanceOf(address account) external view returns (uint256);
+    function transfer(address to, uint256 amount) external returns (bool);
+    function allowance(address owner, address spender) external view returns (uint256);
+    function approve(address spender, uint256 amount) external returns (bool);
+    function transferFrom(address from, address to, uint256 amount) external returns (bool);
+}
+
+// File: @openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol
+// OpenZeppelin Contracts (last updated v4.9.0) (token/ERC20/extensions/IERC20Permit.sol)
+
+interface IERC20Permit {
+    function permit(
+        address owner,
+        address spender,
+        uint256 value,
+        uint256 deadline,
+        uint8 v,
+        bytes32 r,
+        bytes32 s
+    ) external;
+    function nonces(address owner) external view returns (uint256);
+    function DOMAIN_SEPARATOR() external view returns (bytes32);
+}
+
+// File: @openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol
+// OpenZeppelin Contracts (last updated v4.9.3) (token/ERC20/utils/SafeERC20.sol)
+
+library SafeERC20 {
+    function safeTransfer(IERC20 token, address to, uint256 value) internal {
+        (bool success, bytes memory data) = address(token).call(abi.encodeWithSelector(token.transfer.selector, to, value));
+        require(success && (data.length == 0 || abi.decode(data, (bool))), "SafeERC20: ERC20 operation did not succeed");
+    }
+    
+    function safeTransferFrom(IERC20 token, address from, address to, uint256 value) internal {
+        (bool success, bytes memory data) = address(token).call(abi.encodeWithSelector(token.transferFrom.selector, from, to, value));
+        require(success && (data.length == 0 || abi.decode(data, (bool))), "SafeERC20: ERC20 operation did not succeed");
+    }
+    
+    function safeApprove(IERC20 token, address spender, uint256 value) internal {
+        require((value == 0) || (token.allowance(address(this), spender) == 0),
+            "SafeERC20: approve from non-zero to non-zero allowance"
+        );
+        (bool success, bytes memory data) = address(token).call(abi.encodeWithSelector(token.approve.selector, spender, value));
+        require(success && (data.length == 0 || abi.decode(data, (bool))), "SafeERC20: ERC20 operation did not succeed");
+    }
+}
+
+// File: @openzeppelin/contracts/utils/Context.sol
+// OpenZeppelin Contracts v4.4.1 (utils/Context.sol)
+
+abstract contract Context {
+    function _msgSender() internal view virtual returns (address) {
+        return msg.sender;
+    }
+
+    function _msgData() internal view virtual returns (bytes calldata) {
+        return msg.data;
+    }
+}
+
+// File: @openzeppelin/contracts/access/IAccessControl.sol
+// OpenZeppelin Contracts v4.4.1 (access/IAccessControl.sol)
+
+interface IAccessControl {
+    event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole);
+    event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender);
+    event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender);
+    function hasRole(bytes32 role, address account) external view returns (bool);
+    function getRoleAdmin(bytes32 role) external view returns (bytes32);
+    function grantRole(bytes32 role, address account) external;
+    function revokeRole(bytes32 role, address account) external;
+    function renounceRole(bytes32 role, address account) external;
+}
+
+// File: @openzeppelin/contracts/access/AccessControl.sol
+// OpenZeppelin Contracts (last updated v4.9.0) (access/AccessControl.sol)
+
+abstract contract AccessControl is Context, IAccessControl {
+    struct RoleData {
+        mapping(address => bool) members;
+        bytes32 adminRole;
+    }
+
+    mapping(bytes32 => RoleData) private _roles;
+    bytes32 public constant DEFAULT_ADMIN_ROLE = 0x00;
+
+    modifier onlyRole(bytes32 role) {
+        _checkRole(role);
+        _;
+    }
+
+    function hasRole(bytes32 role, address account) public view virtual override returns (bool) {
+        return _roles[role].members[account];
+    }
+
+    function _checkRole(bytes32 role) internal view virtual {
+        _checkRole(role, _msgSender());
+    }
+
+    function _checkRole(bytes32 role, address account) internal view virtual {
+        if (!hasRole(role, account)) {
+            revert("AccessControl: account is missing role");
+        }
+    }
+
+    function getRoleAdmin(bytes32 role) public view virtual override returns (bytes32) {
+        return _roles[role].adminRole;
+    }
+
+    function grantRole(bytes32 role, address account) public virtual override onlyRole(getRoleAdmin(role)) {
+        _grantRole(role, account);
+    }
+
+    function revokeRole(bytes32 role, address account) public virtual override onlyRole(getRoleAdmin(role)) {
+        _revokeRole(role, account);
+    }
+
+    function renounceRole(bytes32 role, address account) public virtual override {
+        require(account == _msgSender(), "AccessControl: can only renounce roles for self");
+        _revokeRole(role, account);
+    }
+
+    function _setupRole(bytes32 role, address account) internal virtual {
+        _grantRole(role, account);
+    }
+
+    function _setRoleAdmin(bytes32 role, bytes32 adminRole) internal virtual {
+        bytes32 previousAdminRole = getRoleAdmin(role);
+        _roles[role].adminRole = adminRole;
+        emit RoleAdminChanged(role, previousAdminRole, adminRole);
+    }
+
+    function _grantRole(bytes32 role, address account) internal virtual {
+        if (!hasRole(role, account)) {
+            _roles[role].members[account] = true;
+            emit RoleGranted(role, account, _msgSender());
+        }
+    }
+
+    function _revokeRole(bytes32 role, address account) internal virtual {
+        if (hasRole(role, account)) {
+            _roles[role].members[account] = false;
+            emit RoleRevoked(role, account, _msgSender());
+        }
+    }
+}
+
+// File: @openzeppelin/contracts/security/ReentrancyGuard.sol
+// OpenZeppelin Contracts (last updated v4.9.0) (security/ReentrancyGuard.sol)
+
+abstract contract ReentrancyGuard {
+    uint256 private constant _NOT_ENTERED = 1;
+    uint256 private constant _ENTERED = 2;
+    uint256 private _status;
+
+    constructor() {
+        _status = _NOT_ENTERED;
+    }
+
+    modifier nonReentrant() {
+        require(_status != _ENTERED, "ReentrancyGuard: reentrant call");
+        _status = _ENTERED;
+        _;
+        _status = _NOT_ENTERED;
+    }
+}
+
+// File: @openzeppelin/contracts/security/Pausable.sol
+// OpenZeppelin Contracts (last updated v4.9.0) (security/Pausable.sol)
+
+abstract contract Pausable is Context {
+    event Paused(address account);
+    event Unpaused(address account);
+    bool private _paused;
+
+    constructor() {
+        _paused = false;
+    }
+
+    modifier whenNotPaused() {
+        _requireNotPaused();
+        _;
+    }
+
+    modifier whenPaused() {
+        _requirePaused();
+        _;
+    }
+
+    function paused() public view virtual returns (bool) {
+        return _paused;
+    }
+
+    function _requireNotPaused() internal view virtual {
+        require(!paused(), "Pausable: paused");
+    }
+
+    function _requirePaused() internal view virtual {
+        require(paused(), "Pausable: not paused");
+    }
+
+    function _pause() internal virtual whenNotPaused {
+        _paused = true;
+        emit Paused(_msgSender());
+    }
+
+    function _unpause() internal virtual whenPaused {
+        _paused = false;
+        emit Unpaused(_msgSender());
+    }
+}
+
+// File: contracts/TokenWithdrawalV2.sol
 
 /// @title TokenWithdrawal (improved/fixed)
 /// @notice Multi-sig withdrawer contract with timelock, daily limits, pause, and safe token handling.
 /// @dev Changes vs original:
-///   - avoids public getter on struct with nested mapping (confirmations stored externally)
-///   - uses SafeERC20 for robust token transfers
-///   - fixes event indexed fields (<=3) and emits
-///   - uses nonce for unique requestId
+///   - ensures enough withdrawers exist for required confirmations
+///   - avoids duplicate grant of roles
+///   - small helpers to read ids/count
 contract TokenWithdrawal is AccessControl, ReentrancyGuard, Pausable {
     using SafeERC20 for IERC20;
 
@@ -25,8 +239,7 @@ contract TokenWithdrawal is AccessControl, ReentrancyGuard, Pausable {
     uint256 public constant MIN_CONFIRMATIONS = 2;
     uint256 public constant WITHDRAWAL_DELAY = 2 days;
 
-    // Daily limit (NOTE: single limit applies to amounts as raw uint256.
-    // If you want different limits per token, extend mapping token -> limit)
+    // Daily limit (applies to raw uint256 amounts across tokens/native)
     uint256 public dailyWithdrawalLimit;
     uint256 public lastWithdrawalDay;
     uint256 public totalWithdrawnToday;
@@ -114,7 +327,7 @@ contract TokenWithdrawal is AccessControl, ReentrancyGuard, Pausable {
         require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Caller is not an admin");
         _;
     }
-
+    
     modifier onlyWithdrawer() {
         require(hasRole(WITHDRAWER_ROLE, msg.sender), "Caller is not a withdrawer");
         _;
@@ -122,12 +335,20 @@ contract TokenWithdrawal is AccessControl, ReentrancyGuard, Pausable {
 
     constructor(address _initialAdmin, address[] memory _withdrawers, uint256 _dailyLimit) {
         require(_initialAdmin != address(0), "Invalid admin");
+        require(_withdrawers.length >= MIN_CONFIRMATIONS, "Not enough withdrawers");
+
+        // grant admin roles
         _grantRole(DEFAULT_ADMIN_ROLE, _initialAdmin);
         _grantRole(PAUSER_ROLE, _initialAdmin);
 
+        // grant withdrawer role, avoid duplicates
+        // small local map to track duplicates (in-memory only)
         for (uint256 i = 0; i < _withdrawers.length; i++) {
-            require(_withdrawers[i] != address(0), "Invalid withdrawer");
-            _grantRole(WITHDRAWER_ROLE, _withdrawers[i]);
+            address w = _withdrawers[i];
+            require(w != address(0), "Invalid withdrawer");
+            if (!hasRole(WITHDRAWER_ROLE, w)) {
+                _grantRole(WITHDRAWER_ROLE, w);
+            }
         }
 
         dailyWithdrawalLimit = _dailyLimit;
@@ -340,12 +561,22 @@ contract TokenWithdrawal is AccessControl, ReentrancyGuard, Pausable {
         return (r.id, r.tokenAddress, r.to, r.amount, r.timestamp, r.executed, r.isNative, r.requester, r.confirmationCount);
     }
 
-    /// @notice Check whether `who` has confirmed a given request
+    /// @notice Check whether who has confirmed a given request
     function hasConfirmed(bytes32 requestId, address who) external view returns (bool) {
         return confirmations[requestId][who];
+    }
+
+    /// @notice Number of requests created
+    function getRequestCount() external view returns (uint256) {
+        return withdrawalRequestIds.length;
+    }
+
+    /// @notice Get request id at index (useful for off-chain indexing)
+    function getRequestIdAt(uint256 index) external view returns (bytes32) {
+        require(index < withdrawalRequestIds.length, "Index OOB");
+        return withdrawalRequestIds[index];
     }
 
     /// Allow contract to receive ETH
     receive() external payable {}
 }
-

@@ -1,4 +1,4 @@
-import { X, Mail, Rocket, Zap, Shield, TrendingUp, Lock } from 'lucide-react';
+import { X, Rocket, Zap, Shield, TrendingUp, Lock } from 'lucide-react';
 import { useState } from 'react';
 
 interface JoinRaceModalProps {
@@ -7,7 +7,6 @@ interface JoinRaceModalProps {
 }
 
 export default function JoinRaceModal({ isOpen, onClose }: JoinRaceModalProps) {
-  const [email, setEmail] = useState('');
   const [raceType, setRaceType] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
@@ -19,7 +18,6 @@ export default function JoinRaceModal({ isOpen, onClose }: JoinRaceModalProps) {
     setTimeout(() => {
       setSubmitted(false);
       onClose();
-      setEmail('');
       setRaceType('');
     }, 2000);
   };
@@ -64,13 +62,13 @@ export default function JoinRaceModal({ isOpen, onClose }: JoinRaceModalProps) {
   ];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-start justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto">
       <div className="relative bg-gradient-to-br from-gray-900 to-black border-2 border-red-600/30 rounded-2xl max-w-2xl w-full p-8 shadow-2xl shadow-red-600/20 my-8">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 hover:bg-red-600/10 rounded-lg transition-colors"
+          className="fixed top-4 right-4 p-2 hover:bg-red-600/10 rounded-lg transition-colors bg-gray-900/80 backdrop-blur-sm z-50"
         >
-          <X className="w-5 h-5" />
+          <X className="w-6 h-6" />
         </button>
 
         {!submitted ? (
@@ -114,23 +112,8 @@ export default function JoinRaceModal({ isOpen, onClose }: JoinRaceModalProps) {
               })}
             </div>
 
-            {/* Email Input */}
+            {/* Race Type Selection Form */}
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium mb-2 text-gray-300">
-                  <Mail className="w-4 h-4 inline mr-2" />
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="w-full px-4 py-3 bg-black/50 border border-red-600/30 rounded-lg focus:outline-none focus:border-red-600 transition-colors"
-                  placeholder="your@email.com"
-                />
-              </div>
-
               <button
                 type="submit"
                 disabled={!raceType}

@@ -1,8 +1,15 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Flag, Shield, Gauge, Trophy, ChevronRight } from 'lucide-react';
+import RaceRoadmapModal from './RaceRoadmapModal';
+import GamifiedSecurity from './GamifiedSecurity';
 
 export default function HowItWorks() {
   const [activeLap, setActiveLap] = useState(0);
+  const [showRoadmap, setShowRoadmap] = useState(false);
+
+  const handleExperienceClick = () => {
+    setShowRoadmap(true);
+  };
 
   const laps = [
     {
@@ -130,25 +137,29 @@ export default function HowItWorks() {
                 ))}
               </div>
 
-              <div className="mt-8 p-4 bg-black/30 rounded-lg border border-current/20">
-                <div className="text-xs uppercase tracking-wider mb-2 opacity-70">
-                  Performance Metric
+              {activeLap === 2 ? (
+                <div className="mt-6">
+                  <GamifiedSecurity />
                 </div>
-                <div className="flex items-end space-x-2">
-                  <div className="text-4xl font-bold">
-                    {activeLap === 0 ? '<100ms' : activeLap === 1 ? '24/7' : activeLap === 2 ? '95%' : 'Top 1%'}
+              ) : (
+                <div className="mt-8 p-4 bg-black/30 rounded-lg border border-current/20">
+                  <div className="text-xs uppercase tracking-wider mb-2 opacity-70">
+                    Performance Metric
                   </div>
-                  <div className="text-sm opacity-70 mb-1">
-                    {activeLap === 0
-                      ? 'scan time'
-                      : activeLap === 1
-                      ? 'monitoring'
-                      : activeLap === 2
-                      ? 'completion'
-                      : 'ranking'}
+                  <div className="flex items-end space-x-2">
+                    <div className="text-4xl font-bold">
+                      {activeLap === 0 ? '<100ms' : activeLap === 1 ? '24/7' : 'Top 1%'}
+                    </div>
+                    <div className="text-sm opacity-70 mb-1">
+                      {activeLap === 0
+                        ? 'scan time'
+                        : activeLap === 1
+                        ? 'monitoring'
+                        : 'ranking'}
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
@@ -161,10 +172,18 @@ export default function HowItWorks() {
             Giving your blockchain the speed of Formula-1 and pit-stop security. Prediction, prevention,
             education, and gamification — all in one powerful platform.
           </p>
-          <button className="px-8 py-4 bg-red-600 hover:bg-red-700 rounded-lg font-bold transition-all transform hover:scale-105 inline-flex items-center space-x-2">
+          <button 
+            onClick={handleExperienceClick}
+            className="px-8 py-4 bg-red-600 hover:bg-red-700 rounded-lg font-bold transition-all transform hover:scale-105 inline-flex items-center space-x-2"
+          >
             <span>Experience the Full Circuit</span>
             <ChevronRight className="w-5 h-5" />
           </button>
+          
+          <RaceRoadmapModal 
+            isOpen={showRoadmap} 
+            onClose={() => setShowRoadmap(false)} 
+          />
         </div>
       </div>
     </div>

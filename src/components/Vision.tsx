@@ -250,15 +250,6 @@ export default function Vision() {
             developer, security researcher, or blockchain enthusiast — there's a place for you at RaceFi.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button className="px-8 py-4 bg-white text-red-600 rounded-lg font-bold text-lg transition-all transform hover:scale-105 hover:shadow-xl">
-              Start Your Journey
-            </button>
-            <button className="px-8 py-4 bg-transparent border-2 border-white rounded-lg font-bold text-lg transition-all transform hover:scale-105">
-              View Open Positions
-            </button>
-          </div>
-
           <div className="mt-8 pt-8 border-t border-white/20">
             <div className="grid grid-cols-3 gap-8 max-w-2xl mx-auto">
               <div>

@@ -243,15 +243,17 @@ contract MySecureContract is RaceFiGuard {
           <h3 className="text-3xl font-bold mb-4">Need Help Getting Started?</h3>
           <p className="text-gray-400 mb-6 max-w-2xl mx-auto">
             Our developer support team is here to help you integrate RaceFi into your project.
-            Join our Discord community or schedule a live demo.
+            Schedule a live demo to get started.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button className="px-8 py-4 bg-red-600 hover:bg-red-700 rounded-lg font-bold transition-all transform hover:scale-105">
-              Join Discord
-            </button>
-            <button className="px-8 py-4 bg-transparent border-2 border-red-600 hover:bg-red-600/10 rounded-lg font-bold transition-all">
+          <div className="flex items-center justify-center">
+            <a
+              href="https://calendly.com/racefi/demo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-8 py-4 bg-transparent border-2 border-red-600 hover:bg-red-600/10 rounded-lg font-bold transition-all hover:scale-105 inline-block"
+            >
               Schedule Demo
-            </button>
+            </a>
           </div>
         </div>
       </div>

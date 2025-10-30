@@ -1,0 +1,50 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "email": "john@example.com",
+      "role": "user"
+    },
+    {
+      "id": 2,
+      "name": "Admin User",
+      "email": "admin@racefi.com",
+      "role": "admin"
+    }
+  ],
+  "races": [
+    {
+      "id": 1,
+      "name": "Monaco Grand Prix",
+      "date": "2025-05-25",
+      "location": "Monte Carlo, Monaco",
+      "laps": 78,
+      "status": "upcoming"
+    },
+    {
+      "id": 2,
+      "name": "Le Mans 24 Hours",
+      "date": "2025-06-14",
+      "location": "Le Mans, France",
+      "laps": null,
+      "status": "upcoming"
+    }
+  ],
+  "teams": [
+    {
+      "id": 1,
+      "name": "Red Bull Racing",
+      "country": "Austria",
+      "founded": 2005,
+      "drivers": ["Max Verstappen", "Sergio Perez"]
+    },
+    {
+      "id": 2,
+      "name": "Ferrari",
+      "country": "Italy",
+      "founded": 1929,
+      "drivers": ["Charles Leclerc", "Carlos Sainz"]
+    }
+  ]
+}

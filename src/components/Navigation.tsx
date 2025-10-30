@@ -39,7 +39,7 @@ export default function Navigation({ activeSection }: NavigationProps) {
               </div>
             </div>
 
-            <div className="hidden md:flex items-center space-x-1">
+            <div className="hidden md:flex items-center space-x-4">
               {navItems.map((item) => (
                 <button
                   key={item.id}
@@ -53,6 +53,23 @@ export default function Navigation({ activeSection }: NavigationProps) {
                   {item.label}
                 </button>
               ))}
+              <div className="h-6 w-px bg-gray-700 mx-2"></div>
+              <a
+                href="https://discord.gg/racefi"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded transition-colors"
+              >
+                Join Discord
+              </a>
+              <a
+                href="https://calendly.com/racefi/demo"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 bg-transparent border-2 border-red-600 hover:bg-red-600/10 text-white text-sm font-medium rounded transition-colors"
+              >
+                Schedule Demo
+              </a>
             </div>
 
             <button
@@ -82,6 +99,22 @@ export default function Navigation({ activeSection }: NavigationProps) {
                   {item.label}
                 </button>
               ))}
+              <a
+                href="https://discord.gg/racefi"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full text-left px-4 py-3 rounded-lg text-lg font-medium bg-indigo-600 hover:bg-indigo-700 text-white transition-colors text-center"
+              >
+                Join Discord
+              </a>
+              <a
+                href="https://calendly.com/racefi/demo"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full text-left px-4 py-3 rounded-lg text-lg font-medium border-2 border-red-600 hover:bg-red-600/10 text-white transition-colors text-center"
+              >
+                Schedule Demo
+              </a>
             </div>
           </div>
         </div>
